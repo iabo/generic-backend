@@ -46,9 +46,9 @@ services:
     healthcheck:
       test: curl -f -s "localhost:${SERVICE_PORT}" || exit 1
     volumes:
-      - '/home/node/be-boardgame/node_modules'
+      - '/home/node/emailer-backend/node_modules'
       # Bind Mount Volume
-      - '.:/home/node/be-boardgame'
+      - '.:/home/node/emailer-backend'
       - '~/.ssh:/home/node/.ssh'
   
 volumes:

@@ -6,7 +6,7 @@
       "request": "attach",
       "port": 7489,
       "name": "Docker: Attach to Node",
-      "remoteRoot": "/home/node/be-boardgame",
+      "remoteRoot": "/home/node/emailer-backend",
       "restart": true,
       "skipFiles": [
         "<node_internals>/**"

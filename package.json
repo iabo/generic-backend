@@ -1,7 +1,7 @@
 {
-  "name": "be-boardgame",
+  "name": "emailer-backend",
   "version": "1.0.0",
-  "description": "backend service for videogame \"Guild Manager\"",
+  "description": "backend for Emailer Backend service",
   "main": "index.js",
   "scripts": {
     "start": "node index",
