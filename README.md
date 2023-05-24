@@ -13,6 +13,7 @@ To ensure smooth operation, the Emailer Backend service relies on the following 
 - Select the correct branch
 - Run npm install
 - Copy the `example.env` file into a file called `.env`
+- Save your API Keys in .env
 - run `./bin/generate_keys.sh` to run the ssh keys generation script
 - run `docker compose up`
 - (Inside the API Docker contaienr) run `npx knex migrate:latest` 
