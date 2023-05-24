@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "port": 7489,
+      "name": "Docker: Attach to Node",
+      "remoteRoot": "/home/node/be-boardgame",
+      "restart": true,
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/index.js"
+    },
+  ]
+}

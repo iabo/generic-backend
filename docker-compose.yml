@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  database:
+    image: mysql:8
+    container_name: ${INSTANCE_NAME}_mysql
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_TCP_PORT}
+    restart: unless-stopped
+    hostname: database
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_TCP_PORT: ${MYSQL_TCP_PORT}
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1
+
+  redis:
+    image: redis:alpine
+    container_name: ${INSTANCE_NAME}_redis
+    restart: unless-stopped
+    healthcheck:
+      test: redis-cli ping
+    command: --port ${REDIS_PORT}
+    ports:
+      - ${REDIS_PORT}:${REDIS_EXTERNAL_PORT}
+    expose:
+      - ${REDIS_EXTERNAL_PORT}
+
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: boardgame_app
+    container_name: ${INSTANCE_NAME}_app
+    ports:
+      - ${SERVICE_PORT}:${SERVICE_PORT}
+      - ${NODEMON_PORT}:${NODEMON_PORT}
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f -s "localhost:${SERVICE_PORT}" || exit 1
+    volumes:
+      - '/home/node/be-boardgame/node_modules'
+      # Bind Mount Volume
+      - '.:/home/node/be-boardgame'
+      - '~/.ssh:/home/node/.ssh'
+  
+volumes:
+  db-data:

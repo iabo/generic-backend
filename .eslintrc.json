@@ -1,0 +1,42 @@
+{
+    "env": {
+        "node": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "plugins": ["@getify/proper-arrows"],
+    "extends": "eslint:recommended",
+    "overrides": [
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "prefer-arrow-callback": "off",
+        "@getify/proper-arrows/params": [ "error", { "unused": "trailing", "count": 4, "length": 3, "allowed": [ "e", "v", "cb", "fn", "pr" ] } ],
+        "@getify/proper-arrows/name": "off",
+        "@getify/proper-arrows/return": [ "error", { "ternary": 1, "object": false } ],
+        "@getify/proper-arrows/where": [ "error", { "global": false, "property": true, "export": true, "trivial": false } ],
+        "@getify/proper-arrows/this": "off",
+        "max-len": ["error", { "ignoreComments": true, "code": 130, "tabWidth": 2 }],
+        "no-console": [
+            "error", {}
+        ]
+    }
+}
