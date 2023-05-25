@@ -15,6 +15,7 @@ const confirmationPasswordChange = require('#email/sendConfirmNewPasswordChange'
 const sendChangePasswordEmail = require('#email/sendChangePasswordEmail');
 const sendVerificationEmail = require('#email/sendVerificationEmail');
 const sendWelcomeEmail = require('#email/sendWelcomeEmail');
+const sendDailyReportEmail = require('#email/sendDailyReportEmail');
 const logger = require('#services/logger');
 
 const { NODE_ENV } = process.env;
@@ -588,6 +589,15 @@ async function resendCode(ctx) {
   return ctx.noContent();
 }
 
+async function sendDailyReport(ctx) {
+
+  const { email } = ctx.request.body;
+  const user = await User.query().where('email', email).first();
+  const [, errEmail] = await of(sendDailyReportEmail(user));
+  if (errEmail) ctx.app.emit('error', errEmail, ctx);
+  return ctx.ok({ success: 'The Email was sent' });
+}
+
 async function success(ctx) {
   logger.info('success');
   logger.info(ctx);
@@ -611,6 +621,7 @@ module.exports = {
   postActivateEmail,
   postResetPassword,
   postAcceptInvite,
+  sendDailyReport,
   resendCode,
   success,
   error,

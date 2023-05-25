@@ -111,19 +111,34 @@ router.post(
   controller.postAcceptInvite,
 );
 
+// router.post(
+//   '/resend-code',
+//   validateInput({
+//     body: {
+//       email: Joi.string()
+//         .trim()
+//         .email()
+//         .regex(EMAIL_REGEX)
+//         .required()
+//         .error(new Error('email invalid')),
+//     },
+//   }),
+//   controller.resendCode,
+// );
+
 router.post(
-  '/resend-code',
-  validateInput({
-    body: {
-      email: Joi.string()
-        .trim()
-        .email()
-        .regex(EMAIL_REGEX)
-        .required()
-        .error(new Error('email invalid')),
-    },
-  }),
-  controller.resendCode,
+  '/sendDailyReport',
+  // validateInput({
+  //   body: {
+  //     email: Joi.string()
+  //       .trim()
+  //       .email()
+  //       .regex(EMAIL_REGEX)
+  //       .required()
+  //       .error(new Error('email invalid')),
+  //   },
+  // }),
+  controller.sendDailyReport,
 );
 
 module.exports = router;
