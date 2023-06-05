@@ -4,8 +4,9 @@ const USER_ROLES = {
   SUPER_ADMIN: 3,
 };
 
+// Excluded email domains
 const EMAIL_REGEX = new RegExp(
-  /@(?!hotmail|aol|live|outlook|gmail|yahoo|gmailer|ayahoo|onetel|protonmail|icloud)(([a-zA-Z\d-]+\.)+)/i,
+  /@(?!gmailer|ayahoo|onetel|protonmail)(([a-zA-Z\d-]+\.)+)/i,
 );
 
 // Whether we're in production or development

@@ -169,9 +169,7 @@ async function refreshToken(ctx) {
       message: 'Token invalid',
     });
   }
-  const user = await User.query()
-    .findById(decode.id)
-    .withGraphFetched('[role]');
+  const user = await User.query().findById(decode.id).withGraphFetched('[role]');
   if (!user) {
     return ctx.notFound({
       error: true,
@@ -313,8 +311,7 @@ async function postSendActivationCode(ctx) {
     if (timeDiff < 60) {
       return ctx.conflict({
         type: 'Auth/RetryTime',
-        message:
-          'Please, wait at least 60 seconds before you ask another code.',
+        message: 'Please, wait at least 60 seconds before you ask another code.',
       });
     }
   }
@@ -322,8 +319,7 @@ async function postSendActivationCode(ctx) {
   if (times > 10) {
     return ctx.conflict({
       type: 'Auth/EmailRetryLimit',
-      message:
-        'You got into the limit of how many times you can activate a Email.',
+      message: 'You got into the limit of how many times you can activate a Email.',
     });
   }
 
@@ -459,8 +455,7 @@ async function postActivateEmail(ctx) {
   if (!metadataCode) {
     return ctx.notFound({
       type: 'Auth/ClientCodeNotFound',
-      message:
-        'No activation code was found in the database, please request a new one.',
+      message: 'No activation code was found in the database, please request a new one.',
     });
   }
   await Promise.all([
@@ -538,8 +533,7 @@ async function postResetPassword(ctx) {
   if (!metadataCode) {
     return ctx.notFound({
       type: 'Auth/ClientCodeNotFound',
-      message:
-        'No activation code was found in the database, please request a new one.',
+      message: 'No activation code was found in the database, please request a new one.',
     });
   }
 
@@ -590,12 +584,11 @@ async function resendCode(ctx) {
 }
 
 async function sendDailyReport(ctx) {
-
   const { email } = ctx.request.body;
   const user = await User.query().where('email', email).first();
-  const [, errEmail] = await of(sendDailyReportEmail(user));
+  const [status, errEmail] = await of(sendDailyReportEmail(user, ctx));
   if (errEmail) ctx.app.emit('error', errEmail, ctx);
-  return ctx.ok({ success: 'The Email was sent' });
+  return ctx.ok({ Email: status });
 }
 
 async function success(ctx) {

@@ -128,16 +128,16 @@ router.post(
 
 router.post(
   '/sendDailyReport',
-  // validateInput({
-  //   body: {
-  //     email: Joi.string()
-  //       .trim()
-  //       .email()
-  //       .regex(EMAIL_REGEX)
-  //       .required()
-  //       .error(new Error('email invalid')),
-  //   },
-  // }),
+  validateInput({
+    body: {
+      email: Joi.string()
+        .trim()
+        .email()
+        .regex(EMAIL_REGEX)
+        .required()
+        .error(new Error('email invalid')),
+    },
+  }),
   controller.sendDailyReport,
 );
 

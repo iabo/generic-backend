@@ -1,15 +1,18 @@
-const Mailchimp = require('@mailchimp/mailchimp_transactional');
+const { createMailgunClient } = require('simple-mailgun.js');
 const logger = require('#services/logger');
 
-const { MANDRILL_API_KEY: API_KEY, MANDRILL_ENABLED } = process.env;
-let mailchimp;
+const { MAILGUN_API_KEY, MAILGUN_ENABLED, MAILGUN_DOMAIN } = process.env;
+let mailgunClient;
 
-if (MANDRILL_ENABLED === 'true') {
-  logger.info('🐵 Mandrill API is enabled');
-  mailchimp = Mailchimp(API_KEY);
+if (MAILGUN_ENABLED === 'true' && MAILGUN_API_KEY) {
+  mailgunClient = createMailgunClient({
+    domain: MAILGUN_DOMAIN,
+    apiKey: MAILGUN_API_KEY,
+    debugLogging: true,
+  });
+  logger.info('🔫 Mailgun API is enabled');
 } else {
-  logger.info('🐒 Mandrill API is disabled');
-  mailchimp = Mailchimp();
+  logger.info('🚫 No email API defined');
 }
 
-module.exports = mailchimp;
+module.exports = mailgunClient;
