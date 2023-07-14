@@ -550,6 +550,7 @@ module.exports = async function sendDailyReportEmail(user, ctx) {
     const response = await Mailgun.sendMessage({
       from: `${MAIL_FROM_NAME} ${MAIL_FROM_EMAIL}`,
       to: `${user.full_name} ${user.email}`,
+      //'h:Reply-To': 'yabdala@indevs.site',
       subject: title,
       html: emailContent({
         today: weekday[dayWeek] + ' ' + month[m] + '  ' + dayFormat(day) + ' ' + year,
